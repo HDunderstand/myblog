@@ -1,0 +1,105 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Story &mdash; Free Website Template, Free HTML5 Template by freehtml5.com</title>
+
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'blog/css/index.css' %}">
+</head>
+
+<body>
+<div class="container">
+    {% block body %}
+        {% block header %}
+            <nav class="navbar navbar-default navbar-inverse">
+                <div class="container-fluid ">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'blog:index' %}">Noviciate coder</a>
+                    </div>              <!-- 缩小下拉式菜单 -->
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="{% url 'blog:index' %}">首页 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">关于</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">学习笔记 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Python</a></li>
+                                    <li><a href="#">Django</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        {% endblock %}
+
+
+        <div class="row">
+            <div class="col-md-3">
+
+                {% block aside %}
+                    <div class="jumbotron">
+                        <h1>时间流水</h1>
+                        {% for post in post_list %}
+                            <article class="post post-{{ post.pk }}">
+                                <p class="entry-title">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </p>
+                            </article>
+                        {% endfor %}
+                    </div>
+
+                    <div class="jumbotron">
+                        <div class="widget widget-category">
+                            <h3 class="widget-title">分类</h3>
+                            {% get_categories as category_list %}
+                            <ul>
+                                {% for category in category_list %}
+                                    <li>
+                                        <a href="{% url 'blog:category' category.pk %}">{{ category.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endblock aside %}
+            </div>
+            <div class="col-md-9">
+                {% block content %}
+                {% endblock content %}
+            </div>
+            {% block footer %}
+            {% endblock %}
+
+            {% block gototop %}
+
+            {% endblock %}
+        </div>
+    {% endblock %}
+</div>
+
+</body>
+</html>
+

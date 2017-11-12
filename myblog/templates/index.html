@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="content">
+            <div class="contents">
+                {% for post in post_list %}
+                    <article class="post post-{{ post.pk }}">
+                        <h1 class="entry-title">
+                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                        </h1>
+                        <div class="entry-content clearfix">
+                            <p>{{ post.excerpt }}</p>
+                        </div>
+                        <div class="entry-meta">
+                            <!--  <span class="post-category"><a href="#">{{ post.category.name }}</a></span>    -->
+                            <span class="post-date"><a href="#"><time class="entry-date"
+                                                                      datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+                            <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}content %}
+
+
+
+
+
+
